@@ -1,20 +1,13 @@
-project('vulkan_engine', 'cpp', version: '0.0.1')
+project('vulkan_engine', 'cpp', version: '0.0.1', default_options: ['cpp_std=c++23'])
 
-glfw = dependency('glfw3')
-glm = dependency('glm')
-volk = import('cmake').subproject('volk').dependency('volk')
-
-dep = [glfw, glm, volk]
-
-if host_machine.system() == 'darwin'
-    dep += [dependency('Cocoa', 'IOKit', 'CoreVideo')]
-endif
+dep = [ dependency('glfw3'), dependency('glm'), dependency('vulkan') ]
 
 inc = include_directories('include')
 
 vulkan_engine = library(
     'vulkan_engine',
     sources: [
+        'src/device.cpp',
         'src/pipeline.cpp',
         'src/window.cpp'
     ],

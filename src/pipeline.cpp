@@ -1,15 +1,15 @@
 #include <vulkan_engine/pipeline.hpp>
 
-#include <iostream>
-
 #include <fstream>
 #include <stdexcept>
 #include <string>
 
 namespace Engine {
-Pipeline::Pipeline(const char *vertexShaderPath,
-                   const char *fragmentShaderPath) {
-  createGraphicsPipeline(vertexShaderPath, fragmentShaderPath);
+Pipeline::Pipeline(Device &device, const char *vertexShaderPath,
+                   const char *fragmentShaderPath,
+                   const Pipeline::ConfigInfo &configInfo)
+    : device{device} {
+  createGraphicsPipeline(vertexShaderPath, fragmentShaderPath, configInfo);
 }
 
 Pipeline::~Pipeline() {}
@@ -30,12 +30,29 @@ std::vector<char> Pipeline::readFile(const char *filename) {
 }
 
 void Pipeline::createGraphicsPipeline(const char *vertexShaderPath,
-                                      const char *fragmentShaderPath) {
+                                      const char *fragmentShaderPath,
+                                      const Pipeline::ConfigInfo &configInfo) {
   auto vertShaderCode = readFile(vertexShaderPath);
   auto fragShaderCode = readFile(fragmentShaderPath);
+}
 
-  std::cout << "Vertex shader size: " << vertShaderCode.size() << std::endl;
-  std::cout << "Fragment shader size: " << fragShaderCode.size() << std::endl;
+void Pipeline::createShaderModule(const std::vector<char> &code,
+                                  VkShaderModule *shaderModule) {
+  VkShaderModuleCreateInfo createInfo{};
+  createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+  createInfo.codeSize = code.size();
+  createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
+
+  if (vkCreateShaderModule(device.device(), &createInfo, nullptr,
+                           shaderModule) != VK_SUCCESS) {
+    throw std::runtime_error("failed to create shader module!");
+  }
+}
+
+Pipeline::ConfigInfo Pipeline::defaultPipelineConfigInfo(uint32_t width,
+                                                         uint32_t height) {
+  Pipeline::ConfigInfo configInfo{};
+  return configInfo;
 }
 
 } // namespace Engine

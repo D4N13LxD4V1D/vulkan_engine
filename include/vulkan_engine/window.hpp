@@ -25,6 +25,8 @@ public:
   void pollEvents();
   void swapBuffers();
 
+  void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+
   GLFWwindow *getGLFWWindow();
 };
 } // namespace Engine
