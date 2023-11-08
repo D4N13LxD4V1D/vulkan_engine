@@ -19,14 +19,14 @@ public:
   ~Window();
 
   Window(const Window &) = delete;
-  Window &operator=(const Window &) = delete;
+  auto operator=(const Window &) -> Window & = delete;
 
-  bool shouldClose();
-  void pollEvents();
-  void swapBuffers();
+  auto shouldClose() -> bool;
+  auto pollEvents() -> void;
+  auto swapBuffers() -> void;
 
-  void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+  auto createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) -> void;
 
-  GLFWwindow *getGLFWWindow();
+  auto getGLFWWindow() -> GLFWwindow *;
 };
 } // namespace Engine

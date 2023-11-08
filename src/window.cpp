@@ -14,7 +14,7 @@ Window::~Window() {
   glfwTerminate();
 }
 
-void Window::initWindow() {
+auto Window::initWindow() -> void {
   glfwInit();
 
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -23,17 +23,18 @@ void Window::initWindow() {
   window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 }
 
-bool Window::shouldClose() { return glfwWindowShouldClose(window); }
+auto Window::shouldClose() -> bool { return glfwWindowShouldClose(window); }
 
-void Window::pollEvents() { glfwPollEvents(); }
+auto Window::pollEvents() -> void { glfwPollEvents(); }
 
-void Window::swapBuffers() { glfwSwapBuffers(window); }
+auto Window::swapBuffers() -> void { glfwSwapBuffers(window); }
 
-void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
+auto Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface)
+    -> void {
   if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS)
     throw std::runtime_error("failed to create window surface!");
 }
 
-GLFWwindow *Window::getGLFWWindow() { return window; }
+auto Window::getGLFWWindow() -> GLFWwindow * { return window; }
 
 } // namespace Engine
