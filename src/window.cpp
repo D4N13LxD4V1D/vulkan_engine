@@ -23,6 +23,10 @@ auto Window::initWindow() -> void {
   window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 }
 
+auto Window::getExtent() -> VkExtent2D {
+  return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
+}
+
 auto Window::shouldClose() -> bool { return glfwWindowShouldClose(window); }
 
 auto Window::pollEvents() -> void { glfwPollEvents(); }

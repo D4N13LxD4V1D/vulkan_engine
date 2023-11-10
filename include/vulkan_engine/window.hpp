@@ -21,6 +21,8 @@ public:
   Window(const Window &) = delete;
   auto operator=(const Window &) -> Window & = delete;
 
+  auto getExtent() -> VkExtent2D;
+
   auto shouldClose() -> bool;
   auto pollEvents() -> void;
   auto swapBuffers() -> void;

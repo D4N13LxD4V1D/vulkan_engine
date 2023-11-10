@@ -10,7 +10,8 @@ vulkan_engine = declare_dependency(
         sources: [
             'src/device.cpp',
             'src/pipeline.cpp',
-            'src/window.cpp'
+            'src/window.cpp',
+            'src/swapchain.cpp',
         ],
         include_directories: inc,
         dependencies: dep,
