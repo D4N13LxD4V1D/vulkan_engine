@@ -45,6 +45,7 @@ public:
   Pipeline(const Pipeline &) = delete;
   auto operator=(const Pipeline &) -> Pipeline & = delete;
 
+  auto bind(VkCommandBuffer commandBuffer) -> void;
   static auto defaultPipelineConfigInfo(uint32_t width, uint32_t height)
       -> PipelineConfigInfo;
 };
